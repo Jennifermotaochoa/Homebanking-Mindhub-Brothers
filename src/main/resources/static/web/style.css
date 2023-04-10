@@ -1,5 +1,4 @@
 *{
-    /* font-family: 'Playfair Display', serif; */
     font-family: 'Oswald', sans-serif;
 }
 
@@ -8,7 +7,37 @@
 }
 
 main{
-    /* background-image: url("./Imagenes/fondo-2.jpg"); */
-    background-color: #802628;
-    
+    background-color: #E4F1F5;
+    min-height: 85vh;  
+}
+
+.DEBIT{
+    color: red;
+}
+
+.CREDIT{
+    color: green;
+}
+
+footer{
+    background-color: #F8F9FA;
+}
+
+@media (min-width:320px) and (max-width: 425px){
+    #img-index{
+        display: none;
+    }
+    #style-div{
+        display: none;
+    }
+
+    #form-div{
+        display: block!important;
+    }
+
+    .form{
+        display: flex;
+        flex-direction: column;
+        width: 100%!important;
+    }
 }

@@ -7,6 +7,7 @@ const app = createApp({
             datos: [],
             firstName: "",
             lastName: "",
+            // id: (new URLSearchParams(location.search)).get("id"),
         }
     },
 
@@ -23,21 +24,6 @@ const app = createApp({
             })
             .catch(error => console.log(error))
         },
-
-        addClient(){
-            this.postClient();
-        },
-
-        postClient(){
-            axios.post('/api/clients/1',{
-                firstName: this.firstName,
-                lastName: this.lastName,          
-            })
-            .then(function(response){
-                this.loadData();
-            })
-            .catch(error => console.log(error))
-        }
     }
 
 })
