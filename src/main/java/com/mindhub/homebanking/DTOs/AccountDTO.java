@@ -11,7 +11,7 @@ public class AccountDTO {
     private String number;
     private LocalDateTime creationDate;
     private  double balance;
-    Set<TransactionDTO> transactionsDTO;
+    private Set<TransactionDTO> transactionsDTO;
     public AccountDTO(Account account) {
 
         this.id = account.getId();
@@ -21,6 +21,7 @@ public class AccountDTO {
         this.creationDate = account.getCreationDate();
 
         this.balance = account.getBalance();
+
         this.transactionsDTO = account.getTransactions().stream().map(transaction -> new TransactionDTO(transaction)).collect(Collectors.toSet());
     }
 
@@ -32,31 +33,15 @@ public class AccountDTO {
         return number;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
-    }
-
     public LocalDateTime getCreationDate() {
         return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
     }
 
     public double getBalance() {
         return balance;
     }
 
-    public void setBalance(double balance) {
-        this.balance = balance;
-    }
-
     public Set<TransactionDTO> getTransactionsDTO() {
         return transactionsDTO;
-    }
-
-    public void setTransactionsDTO(Set<TransactionDTO> transactionsDTO) {
-        this.transactionsDTO = transactionsDTO;
     }
 }

@@ -13,7 +13,7 @@ public class Transaction {
 
     private long id;
     private TransactionType type;
-    private double amount;
+    private Double amount;
     private String description;
     private LocalDateTime creationDate;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -23,7 +23,7 @@ public class Transaction {
     public Transaction() {
     }
 
-    public Transaction(TransactionType type, double amount, String description, LocalDateTime creationDate) {
+    public Transaction(TransactionType type, Double amount, String description, LocalDateTime creationDate) {
         this.type = type;
         this.amount = amount;
         this.description = description;
@@ -42,11 +42,11 @@ public class Transaction {
         this.type = type;
     }
 
-    public double getAmount() {
+    public Double getAmount() {
         return amount;
     }
 
-    public void setAmount(double amount) {
+    public void setAmount(Double amount) {
         this.amount = amount;
     }
 

@@ -7,7 +7,7 @@ const app = createApp({
             datos: [],
             firstName: "",
             lastName: "",
-            // id: (new URLSearchParams(location.search)).get("id"),
+            loans:[],
         }
     },
 
@@ -21,6 +21,8 @@ const app = createApp({
             .then(response => {
                 this.datos = response.data;
                 console.log(this.datos);
+                this.loans = this.datos.loans;
+                console.log(this.loans);
             })
             .catch(error => console.log(error))
         },

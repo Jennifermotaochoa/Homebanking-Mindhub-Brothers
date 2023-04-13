@@ -23,7 +23,6 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                  <!-- <a class="nav-link" aria-current="page" href="./index.html">Home</a> -->
                   <a class="nav-link active" href="#">Accounts</a>
                   <a class="nav-link" href="./index.html">Exit</a>
                 </div>
@@ -31,24 +30,45 @@
             </div>
           </nav>
     </header>
-    <main id="app">       
-          <h1 class="p-2">Accounts</h1>
+    <main id="app">  
+          <h2 class="p-2">Accounts</h2>
           <div class="d-flex justify-content-center">
             <template v-for="account of datos.accountsDTO">
-              <div class="card text-bg-light mb-3 d-flex justify-content-center m-2" style="width: 18rem;">
+              <div class="card text-bg-danger mb-3 d-flex justify-content-center m-2" style="width: 18rem;">
                 <div class="card-header">{{datos.firstName}} {{datos.lastName}}</div>
                 <div class="card-body">
-                  <h5 class="card-title">Account</h5>
+                  <h5 class="card-title">Account {{account.id}}</h5>
                     <p class="card-text">
                         <p> Number: {{account.number}}</p>
                         <p>Balance: ${{account.balance}}</p>  
                         <p>Creation Date: {{account.creationDate.slice(0,10)}} at {{account.creationDate.slice(11,16)}}</p>
-                        <a :href="'./account.html?id=' +account.id" class="btn btn-primary">More info</a> 
+                        <a :href="'./account.html?id=' +account.id" class="btn btn-secondary">View transactions</a> 
                     </p>            
                 </div>
               </div>
             </template>
-          </div> 
+          </div>
+
+          <h2 class="p-2">Loans</h2>
+          <div v-if="loans.length != 0">
+            <div class="d-flex justify-content-center">
+              <template v-for="loan of loans">
+                <div class="card text-bg-danger mb-3 d-flex justify-content-center m-2" style="width: 18rem;">
+                  <div class="card-header">{{loan.typeLoan}}</div>
+                  <div class="card-body">
+                    <h5 class="card-title">Loan {{loan.id}}</h5>
+                      <p class="card-text">
+                          <p> Amount: ${{loan.amount}}</p>
+                          <p> Payments: {{loan.payments}}</p>   
+                      </p>            
+                  </div>
+                </div>
+              </template>
+            </div>
+          </div>
+          <div v-else>
+            <h5 class="d-flex justify-content-center">You haven't any loan.</h5>
+          </div>
     </main>
     <footer class="d-flex justify-content-between p-2">
       <div>
