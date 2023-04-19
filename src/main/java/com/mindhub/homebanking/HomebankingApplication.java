@@ -7,9 +7,12 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import static com.mindhub.homebanking.models.ColorType.GOLD;
+import static com.mindhub.homebanking.models.ColorType.TITANIUM;
 import static com.mindhub.homebanking.models.TransactionType.CREDIT;
 import static com.mindhub.homebanking.models.TransactionType.DEBIT;
 
@@ -23,8 +26,10 @@ public class HomebankingApplication {
 
 	LocalDateTime today =  LocalDateTime.now();
 	LocalDateTime tomorrow = today.plusDays(1);
+	LocalDate fromDate = LocalDate.now();
+	LocalDate thruDate = fromDate.plusYears(5);
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
 		return(arg) -> {
 			//Cliente 1 con 2 cuentas, 3 transacciones y 2 prestamos
 			Client client1 = new Client("Melba", "Morel", "melba@minhub.com");
@@ -74,6 +79,14 @@ public class HomebankingApplication {
 			typeLoan2.addClientLoan(clientLoan2);
 			clientLoanRepository.save(clientLoan2);
 
+			Card cardDebit1 = new Card(client1.getFirstName() + " " + client1.getLastName(), CardType.DEBIT, ColorType.GOLD, "1111-2222-3333", 123, thruDate, fromDate);
+            client1.addCard(cardDebit1);
+            cardRepository.save(cardDebit1);
+
+            Card cardCredit1 = new Card(client1.getFirstName() + " " + client1.getLastName(), CardType.CREDIT, ColorType.TITANIUM, "4444-5555-6666", 456, thruDate, fromDate);
+            client1.addCard(cardCredit1);
+            cardRepository.save(cardCredit1);
+
 			//Cliente 2 con 1 cuenta y 2 prestamos
 			Client client2 = new Client("Jennifer", "Mota", "jennifer@hotmail.com");
 			clientRepository.save(client2);
@@ -92,6 +105,10 @@ public class HomebankingApplication {
 			client2.addClientLoan(client2Loan2);
 			typeLoan3.addClientLoan(client2Loan2);
 			clientLoanRepository.save(client2Loan2);
+
+            Card cardCredit2 = new Card(client2.getFirstName() + " " + client2.getLastName(), CardType.CREDIT, ColorType.SILVER, "7777-8888-999", 789, thruDate, fromDate);
+            client2.addCard(cardCredit2);
+            cardRepository.save(cardCredit2);
 
 		};
 	}
