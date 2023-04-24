@@ -31,9 +31,9 @@
             </div>
         </nav>
     </header>
-    <main id="app">
+    <main id="app" v-cloak>
       <div class="d-flex flex-column">
-        <table class="table table-bordered d-flex justify-content-center p-5">
+        <table class="table table-bordered d-flex justify-content-center p-4">
             <tbody class="table-light">
                 <tr class="table-danger">
                     <th colspan="4">Account's transactions {{account.id}}</th>
@@ -52,7 +52,7 @@
                 </tr>
             </tbody>
         </table>
-        <img src="./Assets/Imagenes/pexels-karolina-grabowska-4968390.jpg" alt="..." id="banner-account" class="object-fit-cover">
+        <div id="banner-account" ></div>
       </div>
     </main>
     <footer class="d-flex justify-content-between p-2">

@@ -2,6 +2,10 @@
   font-family: 'Oswald', sans-serif;
 }
 
+[v-cloak] {
+  display: none;
+}
+
 #logo{
   width: 3rem;
 }
@@ -26,18 +30,26 @@ main{
 footer{
   background-color: #F8F9FA;
 }
+
 #banner-cards{
   height: 15rem!important;
+  background-image: url(./Imagenes/banner-cards.jpg);
+  background-size: cover; 
+  background-position-y: 65%;
 }
+
 #banner-accounts{
   height: 20rem!important;
-  background-image: url(./Imagenes/pexels-andrea-piacquadio-3823488.jpg);
+  background-image: url(./Imagenes/banner-accounts.jpg);
   background-size: cover;
   background-position-y: 40%;
 }
 
 #banner-account{
-  height: 15rem!important;
+  height: 20rem!important;
+  background-image: url(./Imagenes/banner-transactions.jpg);
+  background-size: cover; 
+  background-position-y: 20%;
 }
 
 .flip-card{

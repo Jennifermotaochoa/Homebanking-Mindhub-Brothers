@@ -16,7 +16,11 @@ const app = createApp({
             axios.post('/api/login','email=' + this.email + '&password=' + this.password)
             .then(response => { window.location.href = "/web/accounts.html"})
             
-            .catch(error => console.log(error))
+            .catch(error => Swal.fire({
+                title: 'Error',
+                text: 'Your password or email is incorrect',
+                icon: 'error'
+            }))
         }
     }
 })
