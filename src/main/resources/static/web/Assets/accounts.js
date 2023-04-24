@@ -17,7 +17,7 @@ const app = createApp({
 
     methods:{
         loadData(){
-            axios.get('/api/clients/1')
+            axios.get('/api/clients/current')
             .then(response => {
                 this.datos = response.data;
                 console.log(this.datos);

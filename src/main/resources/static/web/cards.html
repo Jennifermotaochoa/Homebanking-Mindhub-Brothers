@@ -5,8 +5,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homebanking | My Cards</title>
-    <link rel="icon" href="./Imagenes/logo.png">
-    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="./Assets/Imagenes/logo.png">
+    <link rel="stylesheet" href="./Assets/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-              <img src="./Imagenes/logo.png" alt="..." id="logo">
+              <img src="./Assets/Imagenes/logo.png" alt="..." id="logo">
               <a class="navbar-brand text-danger" href="#">MindHub Brothers</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -33,15 +33,15 @@
     </header>
     <main id="app">
       <div class="d-flex flex-column"> 
-      <img src="./Imagenes/banner-cards.jpg" alt="..." id="banner-cards" class="object-fit-cover">
-      <h2 class="p-2">Cards</h2>
-      <div class="d-flex justify-content-center gap-3">
+      <img src="./Assets/Imagenes/banner-cards.jpg" alt="..." id="banner-cards" class="object-fit-cover">
+      <h2 class="d-flex justify-content-around p-2">Cards</h2>
+      <div class="d-flex justify-content-center gap-5">
         <div v-if="cardsGold.length != 0">
           <template v-for="card of cardsGold">
               <div class="flip-card ">
                 <div class="flip-card-inner">
                     <div class="flip-card-front">
-                        <p class="heading_8264">MASTERCARD {{card.type}}</p>
+                        <p class="heading_8264-gold">MASTERCARD {{card.type}}</p>
                         <svg viewBox="0 0 48 48" height="36" width="36" y="0px" x="0px" xmlns="http://www.w3.org/2000/svg" class="logo">
                         <path d="M32 10A14 14 0 1 0 32 38A14 14 0 1 0 32 10Z" fill="#ff9800"></path><path d="M16 10A14 14 0 1 0 16 38A14 14 0 1 0 16 10Z" fill="#d50000"></path><path d="M18,24c0,4.755,2.376,8.95,6,11.48c3.624-2.53,6-6.725,6-11.48s-2.376-8.95-6-11.48 C20.376,15.05,18,19.245,18,24z" fill="#ff3d00"></path>
                         </svg>
@@ -93,10 +93,9 @@
                           OjU2KzAwOjAw0ssWdwAAACh0RVh0ZGF0ZTp0aW1lc3RhbXAAMjAyMy0wMi0xM1QwODoxOTo1Nisw
                           MDowMIXeN6gAAAAASUVORK5CYII=" y="0" x="0" height="50" width="50" id="image0"></image>
                         </svg>
-                        <p class="number">{{card.number}}</p>
-                        <p class="valid_thru">VALID THRU</p>
-                        <p class="date_8264">{{card.thruDate.slice(2,7)}}</p>
-                        <p class="name">{{card.cardHolder}}</p>
+                        <p class="number-gold">{{card.number}}</p>
+                        <p class="date_8264-gold">Valid thru: {{card.thruDate.slice(2,7)}}</p>
+                        <p class="name-gold">{{card.cardHolder}}</p>
                     </div>
                     <div class="flip-card-back">
                         <div class="strip"></div>
@@ -168,8 +167,7 @@
                             MDowMIXeN6gAAAAASUVORK5CYII=" y="0" x="0" height="50" width="50" id="image0"></image>
                           </svg>
                           <p class="number">{{card.number}}</p>
-                          <p class="valid_thru">VALID THRU</p>
-                          <p class="date_8264">{{card.thruDate.slice(2,7)}}</p>
+                          <p class="date_8264">Valid thru: {{card.thruDate.slice(2,7)}}</p>
                           <p class="name">{{card.cardHolder}}</p>
                       </div>
                       <div class="flip-card-back-titanium">
@@ -242,8 +240,7 @@
                           MDowMIXeN6gAAAAASUVORK5CYII=" y="0" x="0" height="50" width="50" id="image0"></image>
                         </svg>
                         <p class="number">{{card.number}}</p>
-                        <p class="valid_thru">VALID THRU</p>
-                        <p class="date_8264">{{card.thruDate.slice(2,7)}}</p>
+                        <p class="date_8264">Valid thru: {{card.thruDate.slice(2,7)}}</p>
                         <p class="name">{{card.cardHolder}}</p>
                     </div>
                     <div class="flip-card-back-silver">
@@ -263,21 +260,26 @@
 
     <footer class="d-flex justify-content-between p-2">
         <div>
-          <a href="https://www.instagram.com/"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-instagram" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <a href="https://www.linkedin.com/in/jennifer-mota-ochoa-64384922b/"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <rect x="4" y="4" width="16" height="16" rx="4" />
-            <circle cx="12" cy="12" r="3" />
-            <line x1="16.5" y1="7.5" x2="16.5" y2="7.501" />
+            <rect x="4" y="4" width="16" height="16" rx="2" />
+            <line x1="8" y1="11" x2="8" y2="16" />
+            <line x1="8" y1="8" x2="8" y2="8.01" />
+            <line x1="12" y1="16" x2="12" y2="11" />
+            <path d="M16 16v-3a2 2 0 0 0 -4 0" />
           </svg></a>
-          <a href="https://www.facebook.com/"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-facebook" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  
+          <a href="https://github.com/Jennifermotaochoa"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-            <path d="M7 10v4h3v7h4v-7h3l1 -4h-4v-2a1 1 0 0 1 1 -1h3v-4h-3a5 5 0 0 0 -5 5v2h-3" />
+            <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
           </svg></a>
-          <a href="https://web.whatsapp.com/"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#2c3e50" fill="none" stroke-linecap="round" stroke-linejoin="round">
+
+          <a href="https://web.whatsapp.com/"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-whatsapp" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
             <path d="M3 21l1.65 -3.8a9 9 0 1 1 3.4 2.9l-5.05 .9" />
-            <path d="M9 10a0.5 .5 0 0 0 1 0v-1a0.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a0.5 .5 0 0 0 0 -1h-1a0.5 .5 0 0 0 0 1"/>
+            <path d="M9 10a0.5 .5 0 0 0 1 0v-1a0.5 .5 0 0 0 -1 0v1a5 5 0 0 0 5 5h1a0.5 .5 0 0 0 0 -1h-1a0.5 .5 0 0 0 0 1" />
           </svg></a>
+
         </div>
         <h5>Cohort 44 - Jennifer Mota</h5>      
       </footer>
@@ -285,6 +287,6 @@
       <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
       <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-      <script src="./cards.js"></script>
+      <script src="./Assets/cards.js"></script>
 </body>
 </html>

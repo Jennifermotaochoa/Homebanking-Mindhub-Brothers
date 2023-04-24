@@ -2,10 +2,12 @@ package com.mindhub.homebanking;
 
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -28,11 +30,19 @@ public class HomebankingApplication {
 	LocalDateTime tomorrow = today.plusDays(1);
 	LocalDate fromDate = LocalDate.now();
 	LocalDate thruDate = fromDate.plusYears(5);
+
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	@Bean
-	public CommandLineRunner initData(ClientRepository clientRepository, AccountRepository accountRepository, TransactionRepository transactionRepository, LoanRepository loanRepository, ClientLoanRepository clientLoanRepository, CardRepository cardRepository) {
+	public CommandLineRunner initData(ClientRepository clientRepository,
+									  AccountRepository accountRepository,
+									  TransactionRepository transactionRepository,
+									  LoanRepository loanRepository,
+									  ClientLoanRepository clientLoanRepository,
+									  CardRepository cardRepository) {
 		return(arg) -> {
 			//Cliente 1 con 2 cuentas, 3 transacciones y 2 prestamos
-			Client client1 = new Client("Melba", "Morel", "melba@minhub.com");
+			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba123"));
 			clientRepository.save(client1);
 
 			Account account1 = new Account("VINN001", today, 5000.00);
@@ -88,7 +98,7 @@ public class HomebankingApplication {
             cardRepository.save(cardCredit1);
 
 			//Cliente 2 con 1 cuenta y 2 prestamos
-			Client client2 = new Client("Jennifer", "Mota", "jennifer@hotmail.com");
+			Client client2 = new Client("Jennifer", "Mota", "jennifer@hotmail.com", passwordEncoder.encode("jennifer123"));
 			clientRepository.save(client2);
 
 			Account account3 = new Account("VINN003", today, 6000.00);
