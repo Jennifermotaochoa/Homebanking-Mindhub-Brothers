@@ -19,6 +19,28 @@ main{
   min-height: 85vh;  
 }
 
+.transactions{
+  /* background-image: url(./Imagenes/banner-transactions.jpg); */
+  min-height: 85vh;
+  background: linear-gradient(rgba(210, 210, 210, 0.75), rgba(210, 210, 210, 0.75)), url(./Imagenes/banner-transactions.jpg) no-repeat center center fixed;
+  background-size: cover;
+
+}
+
+.create-cards{
+  background-image: url(./Imagenes/pexels-anna-tarazevich-5242822.jpg);
+  background-size: cover;
+  min-height: 85vh;
+  width: 100vw;
+  
+}
+
+.form-select-card{
+  height: 85vh;
+  width: 50vw;
+  margin: auto;
+}
+
 .DEBIT{
   color: red;
 }
@@ -29,6 +51,25 @@ main{
 
 footer{
   background-color: #F8F9FA;
+}
+
+#banner-index{
+  height: 20rem!important;
+  background-image: url(./Imagenes/banner-index.jpg);
+  background-size: cover;
+  background-position-y: 35%;
+}
+
+.title-index{
+  text-shadow: 2px 2px 2px white;
+}
+
+.container-index{
+  width: 25rem;
+  transition: transform 0.5s ease-out;
+}
+.container-index:hover{
+  transform : rotate(10);
 }
 
 #banner-cards{
@@ -99,9 +140,9 @@ footer{
   position: absolute;
   /* font-weight: bold; */
   letter-spacing: .3em;
-  font-size: 1em;
-  top: 4.4em;
-  left: 1.6em;
+  font-size: 0.9em;
+  top: 5.3em;
+  left: 1.8em;
   color: white;
 }
 
@@ -109,9 +150,9 @@ footer{
   position: absolute;
   font-weight: bold;
   letter-spacing: .3em;
-  font-size: 1em;
-  top: 4.4em;
-  left: 1.6em;
+  font-size: 0.9em;
+  top: 5.3em;
+  left: 1.8em;
   color: black;
 }
 

@@ -9,6 +9,8 @@ const app = createApp({
             cardsGold: [],
             cardsTitanium: [],
             cardsSilver: [],
+            cardType: "",
+            colorType: "",
         }
     },
 
@@ -34,9 +36,24 @@ const app = createApp({
 
                 this.cardsSilver = this.cards.filter(card => card.color === "SILVER");
                 console.log(this.cardsSilver);
-
-
             })
+            .catch(error => console.log(error))
+        },
+        newCard(){
+            axios.post('/api/clients/current/cards', 'cardType=' + this.cardType + '&colorType=' + this.colorType)
+            .then(response => 
+                window.location.href="/web/cards.html")
+
+            .catch(error =>  Swal.fire({
+                title: 'Error',
+                text: error.response.data,
+                icon: 'error'
+            }))
+        },
+        logout(){
+            axios.post('/api/logout')
+            .then(response => 
+                window.location.href="/web/index.html")
             .catch(error => console.log(error))
         },
     }

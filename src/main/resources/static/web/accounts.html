@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
+  <div id="app" v-cloak>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
@@ -23,15 +24,15 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                  <a class="nav-link active" href="#">My accounts</a>
-                  <a class="nav-link" href="./cards.html">My cards</a>
-                  <a class="nav-link" href="./index.html">Exit</a>
+                  <a class="nav-link active p-1" href="#">My accounts</a>
+                  <a class="nav-link p-1" href="./cards.html">My cards</a>
+                  <a class="nav-link p-1" href="./index.html" @click="logout">Exit</a>
                 </div>
               </div>
             </div>
           </nav>
     </header>
-    <main id="app" v-cloak>
+    <main>
       <div class="d-flex flex-column">
         <div id="banner-accounts"></div>
         <!-- <img src="./Imagenes/pexels-andrea-piacquadio-3823488.jpg" alt="..." id="banner-accounts" class="object-fit-cover"> -->
@@ -42,9 +43,8 @@
               <div class="card text-bg-danger mb-3 d-flex justify-content-center m-2" style="width: 18rem;">
                 <div class="card-header">{{datos.firstName}} {{datos.lastName}}</div>
                 <div class="card-body">
-                  <h5 class="card-title">Account {{account.id}}</h5>
+                  <h5 class="card-title">Account {{account.number}}</h5>
                     <p class="card-text">
-                        <p> Number: {{account.number}}</p>
                         <p>Balance: ${{account.balance}}</p>  
                         <p>Creation Date: {{account.creationDate.slice(0,10)}} at {{account.creationDate.slice(11,16)}}</p>
                         <a :href="'./account.html?id=' +account.id" class="btn btn-secondary">View transactions</a> 
@@ -53,6 +53,11 @@
               </div>
             </template>
           </div>
+          <div class="d-flex justify-content-end p-1">
+            <h5 class="d-flex align-items-center">Do you want add an account?</h5>
+            <button type="button" class="btn btn-secondary" @click="newAccount">New account</button>
+          </div>
+          
 
           <h2 class="d-flex justify-content-around p-2">Loans</h2>
           <div v-if="loans.length != 0">
@@ -76,6 +81,7 @@
           </div>
       </div>
     </main>
+  </div>
     <footer class="d-flex justify-content-between p-2">
       <div>
         <a href="https://www.linkedin.com/in/jennifer-mota-ochoa-64384922b/"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -105,6 +111,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="./Assets/accounts.js"></script>
 </body>
 </html>

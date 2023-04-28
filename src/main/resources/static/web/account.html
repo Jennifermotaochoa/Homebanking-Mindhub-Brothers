@@ -13,6 +13,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 <body>
+  <div id="app" v-cloak>
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
@@ -23,20 +24,20 @@
               </button>
               <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                  <a class="nav-link active" href="./accounts.html">My accounts</a>
-                  <a class="nav-link" href="./cards.html">My cards</a>
-                  <a class="nav-link" aria-current="page" href="./index.html">Exit</a>
+                  <a class="nav-link active p-1" href="./accounts.html">My accounts</a>
+                  <a class="nav-link p-1" href="./cards.html">My cards</a>
+                  <a class="nav-link p-1" href="./index.html" @click="logout">Exit</a>
                 </div>
               </div>
             </div>
         </nav>
     </header>
-    <main id="app" v-cloak>
-      <div class="d-flex flex-column">
+    <main>
+      <div class="transactions d-flex flex-column">
         <table class="table table-bordered d-flex justify-content-center p-4">
             <tbody class="table-light">
                 <tr class="table-danger">
-                    <th colspan="4">Account's transactions {{account.id}}</th>
+                    <th colspan="4">Account's transactions {{account.number}}</th>
                 </tr>
                 <tr>
                     <td>Type</td>
@@ -52,9 +53,10 @@
                 </tr>
             </tbody>
         </table>
-        <div id="banner-account" ></div>
+        <!-- <div id="banner-account" ></div> -->
       </div>
     </main>
+  </div>
     <footer class="d-flex justify-content-between p-2">
       <div>
         <a href="https://www.linkedin.com/in/jennifer-mota-ochoa-64384922b/"><svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-linkedin" width="30" height="30" viewBox="0 0 24 24" stroke-width="1.5" stroke="#000000" fill="none" stroke-linecap="round" stroke-linejoin="round">

@@ -19,7 +19,7 @@ const app = createApp({
 
     methods:{
         loadData(){
-            axios.get('/api/accounts/' + this.id)
+            axios.get('/api/clients/current/accounts/' + this.id)
             .then(response => {
                 this.account = response.data;
                 console.log(this.account);
@@ -29,6 +29,14 @@ const app = createApp({
             })
             .catch(error => console.log(error))
         },
+
+        logout(){
+            axios.post('/api/logout')
+            .then(response => 
+                window.location.href="/web/index.html")
+            .catch(error => console.log(error))
+        },
+        
     }
 
 })

@@ -12,7 +12,7 @@ const app = createApp({
     },
 
     created(){
-        this.loadData();
+        this.loadData()    
     },
 
     methods:{
@@ -24,6 +24,25 @@ const app = createApp({
                 this.loans = this.datos.loans;
                 console.log(this.loans);
             })
+            .catch(error => console.log(error))
+        },
+
+        newAccount(){
+            axios.post('/api/clients/current/accounts')
+            .then(response => 
+                window.location.href="/web/accounts.html")
+                
+            .catch(error => Swal.fire({
+                title: 'Error',
+                text: error.response.data,
+                icon: 'error'
+            }))
+        },
+
+        logout(){
+            axios.post('/api/logout')
+            .then(response => 
+                window.location.href="/web/index.html")
             .catch(error => console.log(error))
         },
     }

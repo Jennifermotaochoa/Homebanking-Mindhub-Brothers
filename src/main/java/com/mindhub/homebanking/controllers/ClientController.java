@@ -48,18 +48,39 @@ public class ClientController {
     }
 
     @RequestMapping(path = "/clients", method = RequestMethod.POST)
-    public ResponseEntity<Object> register(
+    public ResponseEntity<Object> registerClient(
 
             @RequestParam String firstName, @RequestParam String lastName,
 
             @RequestParam String email, @RequestParam String password) {
 
-        if (firstName.isEmpty() || lastName.isEmpty() || email.isEmpty() || password.isEmpty()) {
-            return new ResponseEntity<>("Missing data", HttpStatus.FORBIDDEN);
+        if (firstName.isBlank()) {
+            return new ResponseEntity<>("Please, complete your first name", HttpStatus.FORBIDDEN);
+        }
+        else if(!firstName.matches("^[a-zA-Z]*$")){
+            return new ResponseEntity<>("Please, the first name only allows letters", HttpStatus.FORBIDDEN);
+        }
+
+        if (lastName.isBlank()) {
+            return new ResponseEntity<>("Please, complete your last name", HttpStatus.FORBIDDEN);
+        }
+        else if(!lastName.matches("^[a-zA-Z]*$")){
+            return new ResponseEntity<>("Please, the last name only allows letters", HttpStatus.FORBIDDEN);
+        }
+
+        if (email.isBlank()) {
+            return new ResponseEntity<>("Please complete your email", HttpStatus.FORBIDDEN);
+        }
+        else if (!email.matches("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}")) {
+            return new ResponseEntity<>("Please, enter a valid email.", HttpStatus.FORBIDDEN);
+        }
+
+        if (password.isBlank()) {
+            return new ResponseEntity<>("Please, complete your password", HttpStatus.FORBIDDEN);
         }
 
         if (clientRepository.findByEmail(email) !=  null) {
-            return new ResponseEntity<>("Email already in use", HttpStatus.FORBIDDEN);
+            return new ResponseEntity<>("Your email already in use", HttpStatus.FORBIDDEN);
         }
 
         Client newClient = new Client(firstName, lastName, email, passwordEncoder.encode(password));
@@ -79,12 +100,12 @@ public class ClientController {
     }
     int min = 000000;
     int max = 999999;
-    public int getNumberRandom(int min, int max){
+    private int getNumberRandom(int min, int max){
         Random random = new Random();
         int number = random.nextInt(max) + min;
         return number;
     }
-    public String getStringNumber(){
+    private String getStringNumber(){
         int numberRandom = getNumberRandom(min, max);
         return String.valueOf(numberRandom);
     }

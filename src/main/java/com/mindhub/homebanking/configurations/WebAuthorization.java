@@ -20,8 +20,13 @@ public class WebAuthorization {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/manager.html","/manager.js","/style.css").hasAuthority("ADMIN")
                 .antMatchers(HttpMethod.POST,"/web/index.html", "/web/login.html", "/web/register.html","/web/Assets/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/clients", "/api/login", "/api/logout").permitAll()
+
+                .antMatchers("/manager.html", "/manager.js", "/style.css", "/h2-console/**", "/api/clients", "/api/clients/").hasAuthority("ADMIN")
+                .antMatchers("/api/clients/current/accounts", "/api/clients/current/accounts/", "/clients/current/cards").hasAuthority("CLIENT")
+
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/accounts/", "/clients/current/cards").hasAuthority("CLIENT")
                 .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html").hasAuthority("CLIENT");
 
         http.formLogin()
@@ -31,7 +36,7 @@ public class WebAuthorization {
 
                 .loginPage("/api/login");
 
-        http.logout().logoutUrl("/api/logout");
+        http.logout().logoutUrl("/api/logout").deleteCookies("JSESSIONID");
 
 
         // turn off checking for CSRF tokens
