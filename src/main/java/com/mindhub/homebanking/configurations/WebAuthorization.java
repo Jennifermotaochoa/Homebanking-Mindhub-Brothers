@@ -24,10 +24,10 @@ public class WebAuthorization {
                 .antMatchers(HttpMethod.POST, "/api/clients", "/api/login", "/api/logout").permitAll()
 
                 .antMatchers("/manager.html", "/manager.js", "/style.css", "/h2-console/**", "/api/clients", "/api/clients/").hasAuthority("ADMIN")
-                .antMatchers("/api/clients/current/accounts", "/api/clients/current/accounts/", "/clients/current/cards").hasAuthority("CLIENT")
+                .antMatchers("/api/clients/current/accounts", "/api/clients/current/accounts/", "/api/clients/current/cards", "/api/clients/current/transactions").hasAuthority("CLIENT")
 
-                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/accounts/", "/clients/current/cards").hasAuthority("CLIENT")
-                .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html").hasAuthority("CLIENT");
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/accounts/", "/api/clients/current/cards", "api/clients/current/transactions").hasAuthority("CLIENT")
+                .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html", "/web/create-cards.html", "/web/transfers.html").hasAuthority("CLIENT");
 
         http.formLogin()
                 .usernameParameter("email")

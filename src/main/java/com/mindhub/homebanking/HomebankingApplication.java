@@ -45,12 +45,12 @@ public class HomebankingApplication {
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba123"));
 			clientRepository.save(client1);
 
-			Account account1 = new Account("VINN-001", today, 5000.00);
+			Account account1 = new Account("VIN-001", today, 5000.00);
 			client1.addAccount(account1);
 			accountRepository.save(account1);
 			clientRepository.save(client1);
 
-			Account account2 = new Account("VINN-002", tomorrow ,7500.00);
+			Account account2 = new Account("VIN-002", tomorrow ,7500.00);
 			client1.addAccount(account2);
 			accountRepository.save(account2);
 			clientRepository.save(client1);
@@ -101,7 +101,7 @@ public class HomebankingApplication {
 			Client client2 = new Client("Jennifer", "Mota", "jennifer@hotmail.com", passwordEncoder.encode("jennifer123"));
 			clientRepository.save(client2);
 
-			Account account3 = new Account("VINN-003", today, 6000.00);
+			Account account3 = new Account("VIN-003", today, 6000.00);
 			client2.addAccount(account3);
 			accountRepository.save(account3);
 			clientRepository.save(client2);

@@ -50,20 +50,14 @@ public class CardController {
             number = getStringNumber();
         }while(cardRepository.findByNumber(number) != null);
 
-        int numberCVV;
-        do{
-            numberCVV = getRandomCVV();
-        }while(cardRepository.findByCvv(numberCVV) != null);
-
         if(cards.size() >= 3) {
             return new ResponseEntity<>("Yo can't have more than three cards of the same type", HttpStatus.FORBIDDEN);
         }
-        if(client.getCards().size() >= 6){
-            return new ResponseEntity<>("Yo can't have more than six cards.", HttpStatus.FORBIDDEN);
-        }
+
         if(cards.stream().anyMatch(card -> card.getColor() == colorType)){
             return new ResponseEntity<>("You can't have same card", HttpStatus.FORBIDDEN);
         }
+        int numberCVV = getRandomCVV();
 
         Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), cardType, colorType, number, numberCVV, LocalDate.now().plusYears(5), LocalDate.now());
         cardRepository.save(newCard);
