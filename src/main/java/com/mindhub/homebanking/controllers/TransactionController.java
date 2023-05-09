@@ -43,6 +43,7 @@ public class TransactionController {
         if(originAccount == null){
             return new ResponseEntity<>("The origin account doesn't exist", HttpStatus.FORBIDDEN);
         }
+
         if(destinationAccount == null){
             return new ResponseEntity<>("The destination account doesn't exist", HttpStatus.FORBIDDEN);
         }
@@ -58,11 +59,8 @@ public class TransactionController {
         if (numberOriginAccount.isBlank()){
             return new ResponseEntity<>("You need to complete the account origin", HttpStatus.FORBIDDEN);
         }
-        if(amount == 0){
-            return new ResponseEntity<>("You amount can't be 0", HttpStatus.FORBIDDEN);
-        }
 
-        if(amount <= 0){
+        if(amount < 1){
             return new ResponseEntity<>("You amount can't be negative", HttpStatus.FORBIDDEN);
         }
 
@@ -78,6 +76,9 @@ public class TransactionController {
             return new ResponseEntity<>("This account isn't yours", HttpStatus.FORBIDDEN);
         }
 
+        originAccount.setBalance(originAccount.getBalance() - amount);
+        destinationAccount.setBalance(destinationAccount.getBalance() + amount);
+
         Transaction newTransaction = new Transaction(TransactionType.DEBIT, amount, description, LocalDateTime.now());
         transactionRepository.save(newTransaction);
         originAccount.addTransaction(newTransaction);
@@ -88,11 +89,6 @@ public class TransactionController {
         destinationAccount.addTransaction(newTransaction2);
         transactionRepository.save(newTransaction2);
 
-        originAccount.setBalance(originAccount.getBalance() - amount);
-        destinationAccount.setBalance(destinationAccount.getBalance() + amount);
-
-
         return new ResponseEntity<>("Successful transfer",HttpStatus.CREATED);
     }
-
 }
