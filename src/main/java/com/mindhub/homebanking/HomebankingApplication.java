@@ -31,9 +31,9 @@ public class HomebankingApplication {
 	LocalDate fromDate = LocalDate.now();
 	LocalDate thruDate = fromDate.plusYears(5);
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
-	@Bean
+	//@Autowired
+	//private PasswordEncoder passwordEncoder;
+	/*@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository,
 									  AccountRepository accountRepository,
 									  TransactionRepository transactionRepository,
@@ -119,8 +119,6 @@ public class HomebankingApplication {
             Card cardCredit2 = new Card(client2.getFirstName() + " " + client2.getLastName(), CardType.CREDIT, ColorType.SILVER, "7777-8888-999", 789, thruDate, fromDate);
             client2.addCard(cardCredit2);
             cardRepository.save(cardCredit2);
-
 		};
-	}
-
+	}*/
 }
