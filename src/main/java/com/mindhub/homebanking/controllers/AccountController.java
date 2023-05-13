@@ -9,6 +9,7 @@ import com.mindhub.homebanking.repositories.AccountRepository;
 
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.AccountService;
+import com.mindhub.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +30,7 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
 
 
     @RequestMapping("/clients/current/accounts")
@@ -51,20 +52,22 @@ public class AccountController {
 
     @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
     public ResponseEntity<Object> registerAccount(Authentication authentication){
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findByEmail(authentication.getName());
+                //clientRepository.findByEmail(authentication.getName());
 
         String number;
         do{
             number = "VIN-"+ getStringNumber();
         }while(accountService.findByNumber(number) != null);
 
-        if(client.getAccounts().size() >= 2) {
+        if(client.getAccounts().size() == 3) {
             return new ResponseEntity<>("Yo can't have more than three accounts", HttpStatus.FORBIDDEN);
         }
         Account newAccount = new Account(number, LocalDateTime.now(), 0.00);
         accountService.saveAccount(newAccount);
         client.addAccount(newAccount);
-        clientRepository.save(client);
+        //clientRepository.save(client);
+        clientService.saveClient(client);
         accountService.saveAccount(newAccount);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }

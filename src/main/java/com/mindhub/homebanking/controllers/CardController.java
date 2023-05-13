@@ -5,6 +5,8 @@ import com.mindhub.homebanking.DTOs.CardDTO;
 import com.mindhub.homebanking.models.*;
 import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
+import com.mindhub.homebanking.service.CardService;
+import com.mindhub.homebanking.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,23 +25,20 @@ import java.util.stream.Collectors;
 @RequestMapping("/api")
 public class CardController {
     @Autowired
-    private ClientRepository clientRepository;
+    private ClientService clientService;
     @Autowired
-    private CardRepository cardRepository;
+    private CardService cardService;
 
     @RequestMapping("/clients/current/cards")
     public List<CardDTO> getCards(Authentication authentication) {
-        return clientRepository.findByEmail(authentication.getName())
-                .getCards()
-                .stream()
-                .map(card -> new CardDTO(card))
-                .collect(Collectors.toList());
+        return cardService.getCards(authentication);
     }
 
     @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
     public ResponseEntity<Object> registerCard(Authentication authentication, @RequestParam CardType cardType,
                                                @RequestParam ColorType colorType) {
-        Client client = clientRepository.findByEmail(authentication.getName());
+        Client client = clientService.findByEmail(authentication.getName());
+                //clientRepository.findByEmail(authentication.getName());
         Set<Card> cards = client.getCards()
                 .stream()
                 .filter(card -> card.getType() == cardType)
@@ -48,7 +47,7 @@ public class CardController {
         String number;
         do{
             number = getStringNumber();
-        }while(cardRepository.findByNumber(number) != null);
+        }while(cardService.findByNumber(number) != null);
 
         if(cards.size() >= 3) {
             return new ResponseEntity<>("Yo can't have more than three cards of the same type", HttpStatus.FORBIDDEN);
@@ -60,10 +59,11 @@ public class CardController {
         int numberCVV = getRandomCVV();
 
         Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), cardType, colorType, number, numberCVV, LocalDate.now().plusYears(5), LocalDate.now());
-        cardRepository.save(newCard);
+        cardService.saveCard(newCard);
         client.addCard(newCard);
-        clientRepository.save(client);
-        cardRepository.save(newCard);
+        //clientRepository.save(client);
+        clientService.saveClient(client);
+        cardService.saveCard(newCard);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
