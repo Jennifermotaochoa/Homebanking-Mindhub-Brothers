@@ -27,6 +27,20 @@ main{
 
 }
 
+#transfers{
+  /* min-height: 85vh;
+  background: linear-gradient(rgba(210, 210, 210, 0.75), rgba(210, 210, 210, 0.75)), url(./Imagenes/retrato-mujer-feliz-gafas-sol-posando.jpg) no-repeat center center fixed;
+  background-size: cover; */
+  background-image: url(./Imagenes/retrato-mujer-feliz-gafas-sol-posando.jpg);
+  background-size: cover;
+}
+
+#loan-application{
+  background-image: url(./Imagenes/feliz-agente-inmobiliario-reuniendose-pareja-joven-senalando-lugar-firma-su-contrato.jpg);
+  background-size: cover;
+  background-position-y: 55%;
+}
+
 .create-cards{
   background-image: url(./Imagenes/pexels-anna-tarazevich-5242822.jpg);
   background-size: cover;
@@ -43,9 +57,10 @@ main{
 
 .contact-form {
   background-color: #f2f2f2;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
-  width: 50vw;
+  width: 60vw;
+  opacity: 0.9;
 }
 
 .contact-form label {

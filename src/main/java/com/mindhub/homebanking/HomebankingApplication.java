@@ -31,8 +31,8 @@ public class HomebankingApplication {
 	LocalDate fromDate = LocalDate.now();
 	LocalDate thruDate = fromDate.plusYears(5);
 
-	//@Autowired
-	//private PasswordEncoder passwordEncoder;
+	/*@Autowired
+	private PasswordEncoder passwordEncoder;*/
 	/*@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository,
 									  AccountRepository accountRepository,
