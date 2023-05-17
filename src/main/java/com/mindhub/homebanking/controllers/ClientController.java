@@ -31,21 +31,25 @@ public class ClientController {
     @Autowired
     private AccountService accountService;
 
-    @RequestMapping("/clients")
+    //@RequestMapping("/clients")
+    @GetMapping("/clients")
     public List<ClientDTO> getClients() {
         return clientService.getClients();
     }
-    @RequestMapping("/clients/{id}")
+    //@RequestMapping("/clients/{id}")
+    @GetMapping("/clients/{id}")
     public ClientDTO getClient(@PathVariable Long id){
         return clientService.getClient(id);
     }
-    @RequestMapping("/clients/current")
+    //@RequestMapping("/clients/current")
+    @GetMapping("/clients/current")
     public ClientDTO getCurrentClient(Authentication authentication) {
         //ClientDTO  clientDTO= ;
         return clientService.getCurrentClient(authentication);
     }
 
-    @RequestMapping(path = "/clients", method = RequestMethod.POST)
+    //@RequestMapping(path = "/clients", method = RequestMethod.POST)
+    @PostMapping("/clients")
     public ResponseEntity<Object> registerClient(
 
             @RequestParam String firstName, @RequestParam String lastName,
@@ -90,7 +94,7 @@ public class ClientController {
             number = "VIN"+ getStringNumber();
         }while(accountService.findByNumber(number) != null);
 
-        Account newAccount = new Account(number, LocalDateTime.now(), 0.00);
+        Account newAccount = new Account(number, LocalDateTime.now(), 0.00, true);
         newClient.addAccount(newAccount);
         accountService.saveAccount(newAccount);
 

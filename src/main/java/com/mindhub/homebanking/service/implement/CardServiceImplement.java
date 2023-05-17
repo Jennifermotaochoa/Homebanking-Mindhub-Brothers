@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -26,7 +27,6 @@ public class CardServiceImplement implements CardService {
                 .map(card -> new CardDTO(card))
                 .collect(Collectors.toList());
     }
-
     @Override
     public void saveCard(Card card) {
         cardRepository.save(card);
@@ -35,6 +35,11 @@ public class CardServiceImplement implements CardService {
     @Override
     public Card findByNumber(String number) {
         return cardRepository.findByNumber(number);
+    }
+
+    @Override
+    public Optional<Card> findById(long id) {
+        return cardRepository.findById(id);
     }
 
 }

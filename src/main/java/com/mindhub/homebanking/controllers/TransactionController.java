@@ -12,10 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
@@ -30,7 +27,7 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
     @Transactional
-    @RequestMapping(path = "/clients/current/transactions", method = RequestMethod.POST)
+    @PostMapping("/clients/current/transactions")
     public ResponseEntity<Object> newTransaction(Authentication authentication,
                                                   @RequestParam Double amount,
                                                   @RequestParam String description,
@@ -76,18 +73,18 @@ public class TransactionController {
             return new ResponseEntity<>("This account isn't yours", HttpStatus.FORBIDDEN);
         }
 
-        originAccount.setBalance(originAccount.getBalance() - amount);
-        destinationAccount.setBalance(destinationAccount.getBalance() + amount);
-
-        Transaction newTransaction = new Transaction(TransactionType.DEBIT, amount, description, LocalDateTime.now());
+        Transaction newTransaction = new Transaction(TransactionType.DEBIT, amount, description, LocalDateTime.now(), originAccount.getBalance()- amount);
         transactionService.saveTransaction(newTransaction);
         originAccount.addTransaction(newTransaction);
         transactionService.saveTransaction(newTransaction);
 
-        Transaction newTransaction2 = new Transaction(TransactionType.CREDIT, amount, description, LocalDateTime.now());
+        Transaction newTransaction2 = new Transaction(TransactionType.CREDIT, amount, description, LocalDateTime.now(), destinationAccount.getBalance() + amount);
         transactionService.saveTransaction(newTransaction2);
         destinationAccount.addTransaction(newTransaction2);
         transactionService.saveTransaction(newTransaction2);
+
+        originAccount.setBalance(originAccount.getBalance() - amount);
+        destinationAccount.setBalance(destinationAccount.getBalance() + amount);
 
         return new ResponseEntity<>("Successful transfer",HttpStatus.CREATED);
     }

@@ -35,22 +35,28 @@
     </header>
     <main>
       <div class="transactions d-flex flex-column">
-        <table class="table table-bordered d-flex justify-content-center p-4">
+        <table class="table table-bordered d-flex justify-content-center p-4" >
             <tbody class="table-light">
                 <tr class="table-danger">
-                    <th colspan="4">Account's transactions {{account.number}}</th>
+                    <th colspan="5">Account's transactions {{account.number}}. Balance: ${{account.balance}}</th>
                 </tr>
                 <tr>
                     <td>Type</td>
                     <td>Amount</td>
                     <td>Description</td>
                     <td>Transaction Date</td>
+                    <td>Balance</td>
                 </tr>
                 <tr v-for="transaction in account.transactionsDTO">
                     <td>{{transaction.type}}</td>
-                    <td v-bind:class="transaction.type">{{transaction.amount}}</td>
+                    <td v-bind:class="transaction.type">{{transaction.amount.toLocaleString("en-US", { style:
+                      "currency", currency:
+                      "USD" })}}</td>
                     <td>{{transaction.description}}</td>
                     <td>{{transaction.creationDate.slice(0,10)}} at {{transaction.creationDate.slice(11,16)}}</td>
+                    <td>{{transaction.currentBalance.toLocaleString("en-US", { style:
+                      "currency", currency:
+                      "USD" })}}</td>
                 </tr>
             </tbody>
         </table>

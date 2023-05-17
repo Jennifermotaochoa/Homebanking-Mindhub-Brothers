@@ -30,18 +30,24 @@ public class LoanController {
     @Autowired
     private ClientLoanService clientLoanService;
 
-    @RequestMapping("/loans")
+    @GetMapping("/loans")
     public List<LoanDTO> getLoans(Authentication authentication) {
         return loanService.getLoans(authentication);
     }
     @Transactional
-    @RequestMapping(path = "/loans", method = RequestMethod.POST)
+    //@RequestMapping(path = "/loans", method = RequestMethod.POST)
+    @PostMapping("/loans")
     public ResponseEntity<Object> newLoan(Authentication authentication,
                                           @RequestBody LoanApplicationDTO loanApplicationDTO) {
         Client client = clientService.findByEmail(authentication.getName());
         Loan loan = loanService.findById(loanApplicationDTO.getLoanId()).orElse(null);
         Account account = accountService.findByNumber(loanApplicationDTO.getNumberAccount());
-        ClientLoan clientLoanId = clientLoanService.findById(loan.getId()).orElse(null);
+//       ClientLoan clientLoanId = clientLoanService.findById(loan.getId()).orElse(null);
+        List<String> loansName = client.getClientLoans().stream().map(clientLoan1 -> clientLoan1.getLoan().getName()).collect(Collectors.toList());
+
+        if (loansName.contains(loan.getName())){
+            return new ResponseEntity<>("You already have an active loan", HttpStatus.FORBIDDEN);
+        }
 
         if(loan == null){
             return new ResponseEntity<>("The loan doesn't exist", HttpStatus.FORBIDDEN);
@@ -79,16 +85,16 @@ public class LoanController {
             return new ResponseEntity<>("The payments doesn't available", HttpStatus.FORBIDDEN);
         }
 
-        if(clientLoanId != null){
+/*        if(clientLoanId != null){
             return new ResponseEntity<>("You can't apply for the same loan", HttpStatus.FORBIDDEN);
-        }
+        }*/
 
 
         double loanInterest = loanApplicationDTO.getAmount() * 0.2 + loanApplicationDTO.getAmount();
         //double loanPayments = Math.floor(loanInterest / loanApplicationDTO.getPayments());
 
         ClientLoan clientLoan = new ClientLoan(loanInterest, loanApplicationDTO.getPayments());
-        Transaction transactionLoan = new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loan.getName() + " approved", LocalDateTime.now());
+        Transaction transactionLoan = new Transaction(TransactionType.CREDIT, loanApplicationDTO.getAmount(), loan.getName() + " approved", LocalDateTime.now(), account.getBalance() + loanApplicationDTO.getAmount());
 
         account.setBalance(loanApplicationDTO.getAmount() + account.getBalance());
         clientLoanService.saveClientLoan(clientLoan);

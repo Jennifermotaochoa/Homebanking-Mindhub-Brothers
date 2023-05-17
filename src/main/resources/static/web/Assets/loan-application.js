@@ -15,7 +15,6 @@ const app = createApp({
             filterLoan: "",
             amountInterest: 0,
             paymentsInterest: 0,
-
         }
     },
 
@@ -42,9 +41,7 @@ const app = createApp({
                 console.log(this.loans)
             })
             .catch(error => console.log(error))
-        },
-
-        
+        },  
 
         newLoan(){
                 Swal.fire({

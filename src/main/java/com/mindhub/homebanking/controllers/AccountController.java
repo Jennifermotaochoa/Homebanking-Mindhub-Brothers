@@ -20,6 +20,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
@@ -32,41 +33,32 @@ public class AccountController {
     @Autowired
     private ClientService clientService;
 
-
-    @RequestMapping("/clients/current/accounts")
+    @GetMapping("/clients/current/accounts")
     public List<AccountDTO> getAccounts(Authentication authentication) {
         return accountService.getAccounts(authentication);
-/*                clientRepository.findByEmail(authentication.getName())
-                        .getAccounts()
-                        .stream()
-                        .map(account -> new AccountDTO(account))
-                        .collect(Collectors.toList());*/
     }
 
-    @RequestMapping("/clients/current/accounts/{id}")
+    @GetMapping("/clients/current/accounts/{id}")
     public AccountDTO getAccount(@PathVariable Long id){
         return accountService.getAccount(id);
-        /*Optional<Account> optionalAccount = accountRepository.findById(id);
-        return optionalAccount.map(account -> new AccountDTO(account)).orElse(null);*/
     }
 
-    @RequestMapping(path = "/clients/current/accounts", method = RequestMethod.POST)
+    @PostMapping("/clients/current/accounts")
     public ResponseEntity<Object> registerAccount(Authentication authentication){
         Client client = clientService.findByEmail(authentication.getName());
-                //clientRepository.findByEmail(authentication.getName());
+        Set<Account> accounts = client.getAccounts().stream().filter(account -> account.getActive()).collect(Collectors.toSet());
 
         String number;
         do{
             number = "VIN-"+ getStringNumber();
         }while(accountService.findByNumber(number) != null);
 
-        if(client.getAccounts().size() == 3) {
+        if(accounts.size() == 3) {
             return new ResponseEntity<>("Yo can't have more than three accounts", HttpStatus.FORBIDDEN);
         }
-        Account newAccount = new Account(number, LocalDateTime.now(), 0.00);
+        Account newAccount = new Account(number, LocalDateTime.now(), 0.00, true);
         accountService.saveAccount(newAccount);
         client.addAccount(newAccount);
-        //clientRepository.save(client);
         clientService.saveClient(client);
         accountService.saveAccount(newAccount);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -83,5 +75,30 @@ public class AccountController {
         return String.valueOf(numberRandom);
     }
 
+    @PutMapping("/clients/current/accounts/{id}")
+    public ResponseEntity<Object> deleteAccount(Authentication authentication, @PathVariable Long id){
+        Client client = clientService.findByEmail(authentication.getName());
+        Account selectAccount = accountService.findById(id).orElse(null);
 
+        if(!selectAccount.getActive()){
+            return new ResponseEntity<>("This account isn't active", HttpStatus.FORBIDDEN);
+        }
+
+        if(!client.getAccounts().contains(selectAccount)){
+            return new ResponseEntity<>("This account isn't yours", HttpStatus.FORBIDDEN);
+        }
+
+        if(selectAccount == null){
+            return new ResponseEntity<>("This account doesn't exist", HttpStatus.FORBIDDEN);
+        }
+
+        if(selectAccount.getBalance() > 0.0){
+            return new ResponseEntity<>("This account have money", HttpStatus.FORBIDDEN);
+        }
+
+        selectAccount.setActive(false);
+        accountService.saveAccount(selectAccount);
+
+        return new ResponseEntity<>("Delete account", HttpStatus.ACCEPTED);
+    }
 }

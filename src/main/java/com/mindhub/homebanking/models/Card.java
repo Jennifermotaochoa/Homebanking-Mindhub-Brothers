@@ -12,7 +12,6 @@ public class Card {
     @GenericGenerator(name = "native", strategy = "native")
 
     private long id;
-
     private String cardHolder;
     private CardType type;
     private ColorType color;
@@ -20,6 +19,7 @@ public class Card {
     private int cvv;
     private LocalDate thruDate;
     private LocalDate fromDate;
+    private Boolean active;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "client_id")
@@ -28,7 +28,7 @@ public class Card {
     public Card() {
     }
 
-    public Card(String cardHolder, CardType type, ColorType color, String number, int cvv, LocalDate thruDate, LocalDate fromDate) {
+    public Card(String cardHolder, CardType type, ColorType color, String number, int cvv, LocalDate thruDate, LocalDate fromDate, Boolean active) {
         this.cardHolder = cardHolder;
         this.type = type;
         this.color = color;
@@ -36,6 +36,7 @@ public class Card {
         this.cvv = cvv;
         this.thruDate = thruDate;
         this.fromDate = fromDate;
+        this.active = active;
     }
 
     public long getId() {
@@ -104,6 +105,14 @@ public class Card {
 
     public void setClient(Client client) {
         this.client = client;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override

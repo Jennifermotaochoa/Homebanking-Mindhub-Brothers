@@ -6,11 +6,12 @@ const app = createApp({
         return{
             datos: [],
             cards: [],
-            cardsGold: [],
-            cardsTitanium: [],
-            cardsSilver: [],
+            cardsCredit: [],
+            cardsDebit: [],
+            cardsActive: [],
             cardType: "",
             colorType: "",
+            currentDate: ""
         }
     },
 
@@ -28,17 +29,21 @@ const app = createApp({
                 this.cards = this.datos.cards
                 console.log(this.cards);
 
-                this.cardsGold = this.cards.filter(card => card.color === "GOLD");
-                console.log(this.cardsGold);
+                this.cardsDebit = this.cards.filter(card => card.type === "DEBIT" && card.active);
+                console.log(this.cardsDebit);
 
-                this.cardsTitanium = this.cards.filter(card => card.color === "TITANIUM");
-                console.log(this.cardsTitanium);
+                this.cardsCredit = this.cards.filter(card => card.type === "CREDIT" && card.active);
+                console.log(this.cardsCredit);
 
-                this.cardsSilver = this.cards.filter(card => card.color === "SILVER");
-                console.log(this.cardsSilver);
+                this.cardsActive = this.cards.filter(card => card.active);
+                console.log(this.cardsActive);
+
+                this.currentDate = new Date().toLocaleDateString().split(",")[0].split("/").reverse().join("-");
+                console.log(this.currentDate);
             })
             .catch(error => console.log(error))
         },
+
         newCard(){
             axios.post('/api/clients/current/cards', 'cardType=' + this.cardType + '&colorType=' + this.colorType)
             .then(response => 
@@ -50,6 +55,29 @@ const app = createApp({
                 icon: 'error'
             }))
         },
+        
+        deleteCard(id){
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Delete card'
+              }).then(result => {
+                    if (result.isConfirmed){
+                        axios.put(`/api/clients/current/cards/${id}`)
+                        .then(response =>  window.location.href="/web/cards.html")
+                        .catch(error => Swal.fire({
+                            title: 'Error',
+                            text: error.response.data,
+                            icon: 'error'
+                        }))   
+                    }
+            })
+        },
+
         logout(){
             axios.post('/api/logout')
             .then(response => 

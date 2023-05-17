@@ -29,19 +29,19 @@ public class CardController {
     @Autowired
     private CardService cardService;
 
-    @RequestMapping("/clients/current/cards")
+    @GetMapping("/clients/current/cards")
     public List<CardDTO> getCards(Authentication authentication) {
         return cardService.getCards(authentication);
     }
 
-    @RequestMapping(path = "/clients/current/cards", method = RequestMethod.POST)
+
+    @PostMapping("/clients/current/cards")
     public ResponseEntity<Object> registerCard(Authentication authentication, @RequestParam CardType cardType,
                                                @RequestParam ColorType colorType) {
         Client client = clientService.findByEmail(authentication.getName());
-                //clientRepository.findByEmail(authentication.getName());
         Set<Card> cards = client.getCards()
                 .stream()
-                .filter(card -> card.getType() == cardType)
+                .filter(card -> card.getType() == cardType && card.getActive())
                 .collect(Collectors.toSet());
 
         String number;
@@ -58,14 +58,13 @@ public class CardController {
         }
         int numberCVV = getRandomCVV();
 
-        Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), cardType, colorType, number, numberCVV, LocalDate.now().plusYears(5), LocalDate.now());
+        Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), cardType, colorType, number, numberCVV, LocalDate.now().plusYears(5), LocalDate.now(), true);
         cardService.saveCard(newCard);
         client.addCard(newCard);
-        //clientRepository.save(client);
         clientService.saveClient(client);
         cardService.saveCard(newCard);
 
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>("Created card",HttpStatus.CREATED);
     }
     int min = 1000;
     int max = 8999;
@@ -86,5 +85,28 @@ public class CardController {
     }
     private int getRandomCVV(){
         return getNumberRandom(minCVV, maxCVV);
+    }
+
+    @PutMapping("/clients/current/cards/{id}")
+    public ResponseEntity<Object> deleteCard(Authentication authentication, @PathVariable Long id){
+        Client client = clientService.findByEmail(authentication.getName());
+        Card selectCard = cardService.findById(id).orElse(null);
+
+        if(!selectCard.getActive()){
+            return new ResponseEntity<>("This card isn't active", HttpStatus.FORBIDDEN);
+        }
+
+        if(!client.getCards().contains(selectCard)){
+            new ResponseEntity<>("This card doesn't yours", HttpStatus.FORBIDDEN);
+        }
+
+        if(selectCard == null){
+            new ResponseEntity<>("This card doesn't exist", HttpStatus.FORBIDDEN);
+        }
+
+        selectCard.setActive(false);
+        cardService.saveCard(selectCard);
+
+        return new ResponseEntity<>("Delete card", HttpStatus.ACCEPTED);
     }
 }

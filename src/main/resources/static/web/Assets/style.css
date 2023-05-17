@@ -173,6 +173,18 @@ footer{
   background-position-y: 20%;
 }
 
+.GOLD{
+  background-color: rgb(197, 197, 20);
+  }
+
+.TITANIUM{
+  background-color: rgb(85, 80, 80);
+}
+
+.SILVER{
+  background-color: rgb(143, 138, 138);
+}
+
 .flip-card{
   background-color: transparent;
   width: 240px;
@@ -189,14 +201,14 @@ footer{
   color: white;
 }
   
-.heading_8264-gold {
+/* .heading_8264-gold {
   position: absolute;
   letter-spacing: .1em;
   font-size: 0.7em;
   top: 0.9em;
   left: 10.8em;
   color: black;
-}
+} */
 
 .logo {
   position: absolute;
@@ -226,7 +238,7 @@ footer{
   color: white;
 }
 
-.number-gold {
+/* .number-gold {
   position: absolute;
   font-weight: bold;
   letter-spacing: .3em;
@@ -234,7 +246,7 @@ footer{
   top: 5.3em;
   left: 1.8em;
   color: black;
-}
+} */
 
 .date_8264 {
   position: absolute;
@@ -244,15 +256,6 @@ footer{
   left: 2.2em;
   color: white;
 }
-
-.date_8264-gold {
-  position: absolute;
-  /* font-weight: bold; */
-  font-size: 0.8em;
-  top: 7.7em;
-  left: 2.2em;
-  color: black;
-}
   
 .name {
   position: absolute;
@@ -261,14 +264,6 @@ footer{
   top: 9.7em;
   left: 2.2em;
   color: white;
-}
-.name-gold {
-  position: absolute;
-  /* font-weight: bold; */
-  font-size: 0.8em;
-  top: 9.7em;
-  left: 2.2em;
-  color: black;
 }
 
 .strip {
@@ -326,7 +321,7 @@ footer{
   transform: rotateY(180deg);
 }
   
-.flip-card-front, .flip-card-back, .flip-card-front-titanium,  .flip-card-back-titanium, .flip-card-front-silver, .flip-card-back-silver{
+.flip-card-front, .flip-card-back{
   box-shadow: 0 8px 14px 0 rgba(0,0,0,0.2);
   position: absolute;
   display: flex;
@@ -341,34 +336,12 @@ footer{
 
 .flip-card-front {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: rgb(211, 211, 13);
+  /* background-color: #171717; */
 }
 
 .flip-card-back {
   box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: rgb(211, 211, 13);
-  transform: rotateY(180deg);
-}
-
-.flip-card-front-titanium {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: rgba(73, 82, 80, 0.993);
-}
-  
-.flip-card-back-titanium {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: rgba(73, 82, 80, 0.993);
-  transform: rotateY(180deg);
-}
-
-.flip-card-front-silver {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: rgba(133, 141, 140, 0.993);
-}
-
-.flip-card-back-silver {
-  box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 2px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -1px 0px inset;
-  background-color: rgba(133, 141, 140, 0.993);
+  /* background-color: #171717; */
   transform: rotateY(180deg);
 }
 

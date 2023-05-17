@@ -31,9 +31,9 @@ public class HomebankingApplication {
 	LocalDate fromDate = LocalDate.now();
 	LocalDate thruDate = fromDate.plusYears(5);
 
-	/*@Autowired
-	private PasswordEncoder passwordEncoder;*/
-	/*@Bean
+	@Autowired
+	private PasswordEncoder passwordEncoder;
+	@Bean
 	public CommandLineRunner initData(ClientRepository clientRepository,
 									  AccountRepository accountRepository,
 									  TransactionRepository transactionRepository,
@@ -41,31 +41,31 @@ public class HomebankingApplication {
 									  ClientLoanRepository clientLoanRepository,
 									  CardRepository cardRepository) {
 		return(arg) -> {
-			//Cliente 1 con 2 cuentas, 3 transacciones y 2 prestamos
+			//Cliente 1 con 2 cuentas, 3 transacciones y 2 prestamos y 2 tarjetas
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba123"));
 			clientRepository.save(client1);
 
-			Account account1 = new Account("VIN-001", today, 5000.00);
+			Account account1 = new Account("VIN-001", today, 5000.00, true);
 			client1.addAccount(account1);
 			accountRepository.save(account1);
 			clientRepository.save(client1);
 
-			Account account2 = new Account("VIN-002", tomorrow ,7500.00);
+			Account account2 = new Account("VIN-002", tomorrow ,7500.00, true);
 			client1.addAccount(account2);
 			accountRepository.save(account2);
 			clientRepository.save(client1);
 
-			Transaction transaction1 = new Transaction(DEBIT, -1000.00, "McDonald's", today);
+			Transaction transaction1 = new Transaction(DEBIT, -1000.00, "McDonald's", today, 2000.00);
 			account1.addTransaction(transaction1);
 			transactionRepository.save(transaction1);
 			accountRepository.save(account1);
 
-			Transaction transaction2 = new Transaction(CREDIT, +2000.30, "Bazar", today);
+			Transaction transaction2 = new Transaction(CREDIT, +2000.30, "Bazar", today, 7500.00);
 			account2.addTransaction(transaction2);
 			transactionRepository.save(transaction2);
 			accountRepository.save(account2);
 
-			Transaction transaction3 = new Transaction(CREDIT, +3000.00, "Supermercado", tomorrow);
+			Transaction transaction3 = new Transaction(CREDIT, +3000.00, "Supermercado", tomorrow, 5000.00);
 			account1.addTransaction(transaction3);
 			transactionRepository.save(transaction3);
 			accountRepository.save(account1);
@@ -89,11 +89,11 @@ public class HomebankingApplication {
 			typeLoan2.addClientLoan(clientLoan2);
 			clientLoanRepository.save(clientLoan2);
 
-			Card cardDebit1 = new Card(client1.getFirstName() + " " + client1.getLastName(), CardType.DEBIT, ColorType.GOLD, "1111 2222 3333 4444", 123, thruDate, fromDate);
+			Card cardDebit1 = new Card(client1.getFirstName() + " " + client1.getLastName(), CardType.DEBIT, ColorType.GOLD, "1111 2222 3333 4444", 123, fromDate, fromDate, true);
             client1.addCard(cardDebit1);
             cardRepository.save(cardDebit1);
 
-            Card cardCredit1 = new Card(client1.getFirstName() + " " + client1.getLastName(), CardType.CREDIT, ColorType.TITANIUM, "7777 4444 5555 6666", 456, thruDate, fromDate);
+            Card cardCredit1 = new Card(client1.getFirstName() + " " + client1.getLastName(), CardType.CREDIT, ColorType.TITANIUM, "7777 4444 5555 6666", 456, thruDate, fromDate, true);
             client1.addCard(cardCredit1);
             cardRepository.save(cardCredit1);
 
@@ -101,7 +101,7 @@ public class HomebankingApplication {
 			Client client2 = new Client("Jennifer", "Mota", "jennifer@hotmail.com", passwordEncoder.encode("jennifer123"));
 			clientRepository.save(client2);
 
-			Account account3 = new Account("VIN-003", today, 6000.00);
+			Account account3 = new Account("VIN-003", today, 6000.00, true);
 			client2.addAccount(account3);
 			accountRepository.save(account3);
 			clientRepository.save(client2);
@@ -116,9 +116,9 @@ public class HomebankingApplication {
 			typeLoan3.addClientLoan(client2Loan2);
 			clientLoanRepository.save(client2Loan2);
 
-            Card cardCredit2 = new Card(client2.getFirstName() + " " + client2.getLastName(), CardType.CREDIT, ColorType.SILVER, "7777-8888-999", 789, thruDate, fromDate);
+            Card cardCredit2 = new Card(client2.getFirstName() + " " + client2.getLastName(), CardType.CREDIT, ColorType.SILVER, "7777-8888-999", 789, thruDate, fromDate, true);
             client2.addCard(cardCredit2);
             cardRepository.save(cardCredit2);
 		};
-	}*/
+	}
 }
