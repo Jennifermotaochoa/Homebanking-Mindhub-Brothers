@@ -6,6 +6,7 @@ import com.mindhub.homebanking.models.Transaction;
 import com.mindhub.homebanking.models.TransactionType;
 import com.mindhub.homebanking.service.AccountService;
 import com.mindhub.homebanking.service.ClientService;
+import com.mindhub.homebanking.service.PDFGeneratorService;
 import com.mindhub.homebanking.service.TransactionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
@@ -26,6 +33,9 @@ public class TransactionController {
     private AccountService accountService;
     @Autowired
     private TransactionService transactionService;
+    @Autowired
+    private PDFGeneratorService pdfGeneratorService;
+
     @Transactional
     @PostMapping("/clients/current/transactions")
     public ResponseEntity<Object> newTransaction(Authentication authentication,
@@ -87,5 +97,47 @@ public class TransactionController {
         destinationAccount.setBalance(destinationAccount.getBalance() + amount);
 
         return new ResponseEntity<>("Successful transfer",HttpStatus.CREATED);
+    }
+
+    @GetMapping("/pdf/transactions")
+    public ResponseEntity<Object> getTransactionsByDate(HttpServletResponse response,
+                                                        Authentication authentication,
+                                                        @RequestParam String accountNumber,
+                                                        String start, String end) throws IOException {
+        Client client = clientService.findByEmail(authentication.getName());
+        Account account = accountService.findByNumber(accountNumber);
+        List<Transaction> transactions;
+
+        if (client == null) {
+            return new ResponseEntity<>("Client doesn't exist", HttpStatus.FORBIDDEN);
+        }
+
+        if (account == null) {
+            return new ResponseEntity<>("Account doesn't exist", HttpStatus.FORBIDDEN);
+        }
+
+        if (!client.getAccounts().contains(account)) {
+            return new ResponseEntity<>("Account doesn't belong to this client", HttpStatus.FORBIDDEN);
+        }
+
+        if(start.equals("all") || end.equals("all") || start.isEmpty() || end.isEmpty()){
+            transactions = transactionService.getTransactionsByAccount(account);
+            this.pdfGeneratorService.export(response, transactions, account, "all", "all");
+        } else {
+            LocalDateTime startDate = LocalDateTime.parse(start);
+            LocalDateTime endDate = LocalDateTime.parse(end);
+            transactions = transactionService.getTransactionsByAccountAndCreationDate(account, startDate, endDate);
+
+            response.setContentType("application/pdf");
+            DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd:hh:mm:ss");
+            String currentDateTime = dateFormatter.format(new Date());
+
+            String headerKey = "Content-Disposition";
+            String headerValue = "attachment; filename=MB-" + account.getNumber() + "-Transactions.pdf";
+            response.setHeader(headerKey, headerValue);
+            this.pdfGeneratorService.export(response, transactions, account, start, end);
+        }
+
+        return new ResponseEntity<>("PDF created!", HttpStatus.CREATED);
     }
 }

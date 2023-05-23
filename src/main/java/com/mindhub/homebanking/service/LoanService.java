@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface LoanService {
     List<LoanDTO> getLoans(Authentication authentication);
     Optional<Loan> findById(long id);
-
+    void saveLoan(Loan loan);
+    Loan findByName(String name);
 }

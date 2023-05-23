@@ -13,6 +13,7 @@ public class ClientLoan {
 
     private double amount;
     private int payments;
+    private Boolean active;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name="client_id")
     private Client client;
@@ -23,11 +24,10 @@ public class ClientLoan {
     public ClientLoan() {
     }
 
-    public ClientLoan(double amount, int payments) {
-
+    public ClientLoan(double amount, int payments, Boolean active) {
         this.amount = amount;
         this.payments = payments;
-
+        this.active = active;
     }
 
     public long getId() {
@@ -64,6 +64,13 @@ public class ClientLoan {
 
     public void setLoan(Loan loan) {
         this.loan = loan;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+    public void setActive(Boolean active) {
+        this.active = active;
     }
 
     @Override

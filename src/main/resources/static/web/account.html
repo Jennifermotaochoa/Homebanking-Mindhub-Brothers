@@ -17,7 +17,7 @@
     <header>
         <nav class="navbar navbar-expand-lg bg-body-tertiary">
             <div class="container-fluid">
-              <img src="./Assets/Imagenes/logo.png" alt="..." id="logo">
+              <img src="./Assets/Imagenes/logo.png" alt="logo" id="logo">
               <a class="navbar-brand text-danger" href="#">MindHub Brothers</a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -34,7 +34,7 @@
         </nav>
     </header>
     <main>
-      <div class="transactions d-flex flex-column">
+      <div class="transactions d-flex flex-wrap justify-content-center">
         <table class="table table-bordered d-flex justify-content-center p-4" >
             <tbody class="table-light">
                 <tr class="table-danger">
@@ -60,6 +60,44 @@
                 </tr>
             </tbody>
         </table>
+        <div class="p-2">
+          <button type="button" data-bs-toggle="modal"
+          data-bs-target="#exampleModal">
+            <img src="./Assets/Imagenes/img-pdf.png" alt="download-pdf" id="img-pdf">
+          </button>
+        </div>
+        
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+              <div class="modal-content">
+                  <div class="modal-header" style="background-color: #E4F1F5;">
+                      <h1 class="modal-title fs-5" id="exampleModalLabel">Download transactions</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+
+                  <div class="modal-body" style="background-color: #F8F9FA">
+                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" v-model="accountNumber">
+                      <option disabled value>Select the account</option>
+                      <option v-bind:value=account.number>Account:{{account.number}}</option>
+                    </select>
+
+                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" v-model="dateStart">
+                      <option disabled value>Select the start date</option>
+                      <option v-for="transaction in transactions" :value=transaction.creationDate>Start date:{{transaction.creationDate.slice(0,10)}} at {{transaction.creationDate.slice(11,16)}}</option>
+                    </select>
+
+                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" v-model="dateEnd">
+                      <option disabled value>Select the end date</option>
+                      <option v-for="transaction in transactions" :value=transaction.creationDate>End date:{{transaction.creationDate.slice(0,10)}} at {{transaction.creationDate.slice(11,16)}}</option>
+                    </select>                  
+                  </div>
+
+                  <div class="modal-footer" style="background-color: #E4F1F5">
+                    <button type="button" class="btn btn-secondary" @click="downloadPDF()">Download</button>                       
+                  </div>
+              </div>
+          </div>
+        </div>
       </div>
     </main>
   </div>

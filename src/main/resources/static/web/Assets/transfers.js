@@ -22,7 +22,7 @@ const app = createApp({
         loadData() {
             axios.get("/api/clients/current")
                 .then(response => {
-                    this.accounts = response.data.accountsDTO;
+                    this.accounts = response.data.accountsDTO.filter(account => account.active);
                     console.log(this.accounts)
                 })
                 .catch(error => console.log("error"))

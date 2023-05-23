@@ -14,7 +14,14 @@ const app = createApp({
     methods:{
         signIn(){
             axios.post('/api/login','email=' + this.email + '&password=' + this.password)
-            .then(response => { window.location.href = "/web/accounts.html"})
+            .then(response => {
+                if(this.email == "jennifer@hotmail.com"){
+                    window.location.href = "/manager.html"
+                }
+                else{
+                    window.location.href = "/web/accounts.html"
+                }
+                })
             
             .catch(error => Swal.fire({
                 title: 'Error',

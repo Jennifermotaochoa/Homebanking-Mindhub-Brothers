@@ -38,10 +38,33 @@
         <div id="banner-accounts"></div>
         <h1 class="p-2">Welcome {{datos.firstName}}</h1>
           <h2 class="d-flex justify-content-around p-2">Accounts</h2>
-          <div class="d-flex justify-content-center p-1">
-            <h5 class="d-flex align-items-center" style="padding: 0.5rem;">Do you want add an account?</h5>
-            <button type="button" class="btn btn-secondary" @click="newAccount">New account</button>
+          <div class="d-flex justify-content-center p-1" v-if="accounts.length < 3">
+            <h5 class="d-flex align-items-center" style="padding: 0.5rem;">Do you want add an account?</h5>     
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal"
+            data-bs-target="#exampleModal">New account</button>
           </div>
+
+          <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #E4F1F5;">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Create new account</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="background-color: #F8F9FA">
+                      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" v-model="accountType">
+                        <option disabled value>Select type account</option>
+                        <option value="CHECKING">Checking</option>
+                        <option value="SAVINGS">Savings</option>
+                      </select>
+                    </div>
+                    <div class="modal-footer" style="background-color: #E4F1F5">
+                      <button type="button" class="btn btn-secondary" @click="newAccount">New account</button>                       
+                    </div>
+                </div>
+            </div>
+          </div>
+
           <div class="d-flex justify-content-center" style="flex-wrap: wrap;">
             <template v-for="account of accounts">
               <div class="card text-bg-danger mb-3 d-flex justify-content-center m-2" style="width: 18rem;">
@@ -49,6 +72,7 @@
                 <div class="card-body">
                   <h5 class="card-title">Account {{account.number}}</h5>
                     <p class="card-text">
+                        <p>Account type: {{account.accountType}}</p>
                         <p>Balance: {{account.balance.toLocaleString("en-US", { style:
                           "currency", currency:
                           "USD" })}}</p>  
@@ -60,20 +84,22 @@
                     </p>            
                 </div>
               </div>
-              
             </template>
           </div>
          
           <h2 class="d-flex justify-content-around p-2">Loans</h2>
-          <div class="d-flex justify-content-center p-1">
-            <h5 class="d-flex align-items-center" style="padding: 0.5rem;">Do you want a loan?</h5>
-            <a href="/web/loan-application.html"><button type="button" class="btn btn-secondary">New loan</button></a>
+          <div class="d-flex justify-content-center p-1"  v-if="loans.length < 3">
+            <h5 class="d-flex align-items-center" style="padding: 0.5rem;">Do you want a new loan?</h5>
+            <a href="/web/loan-application.html"><button type="button" class="btn btn-secondary">New loan</button></a> 
+          </div>
+          <div class="d-flex justify-content-center" v-if="loans.length > 0">
+            <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal1">Pay</button>
           </div>
           <div v-if="loans.length != 0">
             <div class="d-flex justify-content-center" style="flex-wrap: wrap;">
               <template v-for="loan of loans">
                 <div class="card text-bg-danger mb-3 d-flex justify-content-center m-2 text-center" style="width: 18rem;">
-                  <div class="card-header">{{loan.typeLoan}} loan</div>
+                  <div class="card-header">{{loan.typeLoan}} LOAN</div>
                   <div class="card-body">
                     <!-- <h5 class="card-title">Loan {{loan.id}}</h5> -->
                       <p class="card-text">
@@ -81,14 +107,51 @@
                             "currency", currency:
                             "USD" })}}</p>
                           <p> Payments: {{loan.payments}}</p>   
-                      </p>            
+                      </p>         
                   </div>
-                </div>
+                </div>  
               </template>
+
             </div>
-          </div>
+          </div>  
           <div v-else>
             <h5 class="d-flex justify-content-center">You haven't any loan.</h5>
+          </div>
+
+          //MODAL
+          <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header" style="background-color: #E4F1F5;">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">Pay a loan</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="background-color: #F8F9FA">
+                      
+                      <template v-for="loan in loans">       
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="radio" id="flexRadioDefault2" :id="loan.typeLoan" :value="loan.loanId" v-model="selectLoan" required>
+                            <label class="form-check-label" :for="loan.typeLoan">{{loan.typeLoan}}</label>
+                        </div>
+
+                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" v-model="selectPay">
+                          <option disabled value>Select how much you want to pay</option>
+                          <option :value="loan.amount / loan.payments">Quota:{{loan.amount / loan.payments}}</option>
+                          <option :value="loan.amount">Total amount:{{loan.amount}}</option>
+                        </select>
+                      </template>
+                      
+                      <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" v-model="selectAccount">
+                        <option disabled value>Select the account to pay</option>
+                        <option v-for="account in accounts" :value=account.number>Account:{{account.number}}  Balance:${{account.balance}}</option>
+                      </select>
+
+                    </div>
+                    <div class="modal-footer" style="background-color: #E4F1F5">
+                      <button  type="button" class="btn btn-secondary" @click="payLoan">Pay</button>                       
+                    </div>
+              </div>
+            </div>
           </div>
       </div>
     </main>

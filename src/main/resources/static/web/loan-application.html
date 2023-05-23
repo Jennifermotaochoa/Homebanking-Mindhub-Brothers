@@ -34,12 +34,12 @@
             </nav>
         </header>
 
-        <main class="d-flex flex-wrap justify-content-center p-3" id="loan-application">
+        <main class="d-flex flex-column flex-wrap justify-content-center p-3" id="loan-application">
             {{selectPayments}}
             {{interestLoan}}
             <div class="contact-form d-flex flex-column align-items-center">
                 <span class="heading">Loans</span>
-                <form>
+                <form class="d-flex justify-content-center">
                     <div class="d-flex justify-content-center">
                         <template v-for="loan in loans">       
                             <div class="form-check">
@@ -83,7 +83,7 @@
                         <tr>
                             <td>{{selectLoan}}</td>
                             <td>{{payments}}</td>
-                            <td>{{this.amount * 0.2}} USD</td>
+                            <td>{{amount * 0.2}} USD</td>
                             <td>{{amountInterest}} USD</td>
                             <td>{{paymentsInterest}} USD</td>
                         </tr>

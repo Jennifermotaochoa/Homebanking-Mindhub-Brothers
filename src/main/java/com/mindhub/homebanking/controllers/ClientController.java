@@ -2,11 +2,11 @@ package com.mindhub.homebanking.controllers;
 
 import com.mindhub.homebanking.DTOs.ClientDTO;
 import com.mindhub.homebanking.models.Account;
+import com.mindhub.homebanking.models.AccountType;
 import com.mindhub.homebanking.models.Client;
-import com.mindhub.homebanking.repositories.AccountRepository;
-import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.AccountService;
 import com.mindhub.homebanking.service.ClientService;
+import com.mindhub.homebanking.utils.AccountUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,11 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.Random;
 import java.time.LocalDateTime;
-
-import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api")
@@ -47,8 +43,6 @@ public class ClientController {
         //ClientDTO  clientDTO= ;
         return clientService.getCurrentClient(authentication);
     }
-
-    //@RequestMapping(path = "/clients", method = RequestMethod.POST)
     @PostMapping("/clients")
     public ResponseEntity<Object> registerClient(
 
@@ -91,25 +85,13 @@ public class ClientController {
         String number;
 
         do{
-            number = "VIN"+ getStringNumber();
+            number = "VIN-"+ AccountUtils.getStringNumber();
         }while(accountService.findByNumber(number) != null);
 
-        Account newAccount = new Account(number, LocalDateTime.now(), 0.00, true);
+        Account newAccount = new Account(number, LocalDateTime.now(), 0.00, true, AccountType.CHECKING);
         newClient.addAccount(newAccount);
         accountService.saveAccount(newAccount);
 
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
-    int min = 000000;
-    int max = 999999;
-    private int getNumberRandom(int min, int max){
-        Random random = new Random();
-        int number = random.nextInt(max) + min;
-        return number;
-    }
-    private String getStringNumber(){
-        int numberRandom = getNumberRandom(min, max);
-        return String.valueOf(numberRandom);
-    }
-
 }

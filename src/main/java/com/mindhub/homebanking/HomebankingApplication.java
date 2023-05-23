@@ -45,46 +45,46 @@ public class HomebankingApplication {
 			Client client1 = new Client("Melba", "Morel", "melba@mindhub.com", passwordEncoder.encode("melba123"));
 			clientRepository.save(client1);
 
-			Account account1 = new Account("VIN-001", today, 5000.00, true);
+			Account account1 = new Account("VIN-001", today, 5000.00, true, AccountType.CHECKING);
 			client1.addAccount(account1);
 			accountRepository.save(account1);
 			clientRepository.save(client1);
 
-			Account account2 = new Account("VIN-002", tomorrow ,7500.00, true);
+			Account account2 = new Account("VIN-002", tomorrow ,7500.00, true, AccountType.SAVINGS);
 			client1.addAccount(account2);
 			accountRepository.save(account2);
 			clientRepository.save(client1);
 
-			Transaction transaction1 = new Transaction(DEBIT, -1000.00, "McDonald's", today, 2000.00);
+			Transaction transaction1 = new Transaction(DEBIT, 1000.00, "McDonald's", today, 2000.00);
 			account1.addTransaction(transaction1);
 			transactionRepository.save(transaction1);
 			accountRepository.save(account1);
 
-			Transaction transaction2 = new Transaction(CREDIT, +2000.30, "Bazar", today, 7500.00);
+			Transaction transaction2 = new Transaction(CREDIT, 2000.30, "Bazar", today, 7500.00);
 			account2.addTransaction(transaction2);
 			transactionRepository.save(transaction2);
 			accountRepository.save(account2);
 
-			Transaction transaction3 = new Transaction(CREDIT, +3000.00, "Supermercado", tomorrow, 5000.00);
+			Transaction transaction3 = new Transaction(CREDIT, 3000.00, "Supermercado", tomorrow, 5000.00);
 			account1.addTransaction(transaction3);
 			transactionRepository.save(transaction3);
 			accountRepository.save(account1);
 
-			Loan typeLoan1 = new Loan("Mortgage", 500000.00, (List.of(12, 24, 36, 48, 60)));
+			Loan typeLoan1 = new Loan("MORTAGE", 500000.00, (List.of(12, 24, 36, 48, 60)), 0.3);
 			loanRepository.save(typeLoan1);
 
-			Loan typeLoan2 = new Loan("Personal", 100000.00, (List.of(6, 12, 24)));
+			Loan typeLoan2 = new Loan("PERSONAL", 100000.00, (List.of(6, 12, 24)), 0.2);
 			loanRepository.save(typeLoan2);
 
-			Loan typeLoan3 = new Loan("Auto", 300000.00, (List.of(6, 12, 24, 36)));
+			Loan typeLoan3 = new Loan("AUTO", 300000.00, (List.of(6, 12, 24, 36)), 0.15);
 			loanRepository.save(typeLoan3);
 
-			ClientLoan clientLoan1 = new ClientLoan(400000, 60);
+			ClientLoan clientLoan1 = new ClientLoan(400000, 60, true);
 			client1.addClientLoan(clientLoan1);
 			typeLoan1.addClientLoan(clientLoan1);
 			clientLoanRepository.save(clientLoan1);
 
-			ClientLoan clientLoan2 = new ClientLoan(50000, 12);
+			ClientLoan clientLoan2 = new ClientLoan(50000, 12, true);
 			client1.addClientLoan(clientLoan2);
 			typeLoan2.addClientLoan(clientLoan2);
 			clientLoanRepository.save(clientLoan2);
@@ -101,17 +101,17 @@ public class HomebankingApplication {
 			Client client2 = new Client("Jennifer", "Mota", "jennifer@hotmail.com", passwordEncoder.encode("jennifer123"));
 			clientRepository.save(client2);
 
-			Account account3 = new Account("VIN-003", today, 6000.00, true);
+			Account account3 = new Account("VIN-003", today, 6000.00, true, AccountType.SAVINGS);
 			client2.addAccount(account3);
 			accountRepository.save(account3);
 			clientRepository.save(client2);
 
-			ClientLoan client2Loan1 = new ClientLoan(100000, 24);
+			ClientLoan client2Loan1 = new ClientLoan(100000, 24, true);
 			client2.addClientLoan(client2Loan1);
 			typeLoan2.addClientLoan(client2Loan1);
 			clientLoanRepository.save(client2Loan1);
 
-			ClientLoan client2Loan2 = new ClientLoan(200000, 36);
+			ClientLoan client2Loan2 = new ClientLoan(200000, 36, true);
 			client2.addClientLoan(client2Loan2);
 			typeLoan3.addClientLoan(client2Loan2);
 			clientLoanRepository.save(client2Loan2);

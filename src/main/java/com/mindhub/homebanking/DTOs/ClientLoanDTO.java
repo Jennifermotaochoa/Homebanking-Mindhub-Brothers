@@ -8,6 +8,7 @@ public class ClientLoanDTO {
     private String typeLoan;
     private double amount;
     private int payments;
+    private Boolean active;
 
     public ClientLoanDTO(ClientLoan clientLoan) {
         this.id = clientLoan.getId();
@@ -15,6 +16,7 @@ public class ClientLoanDTO {
         this.typeLoan = clientLoan.getLoan().getName();
         this.amount = clientLoan.getAmount();
         this.payments = clientLoan.getPayments();
+        this.active = clientLoan.getActive();
     }
 
     public long getId() {
@@ -35,5 +37,9 @@ public class ClientLoanDTO {
 
     public int getPayments() {
         return payments;
+    }
+
+    public Boolean getActive() {
+        return active;
     }
 }

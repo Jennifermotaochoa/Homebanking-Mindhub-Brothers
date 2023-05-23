@@ -27,6 +27,10 @@ main{
 
 }
 
+#img-pdf{
+  width: 3rem;
+}
+
 #transfers{
   /* min-height: 85vh;
   background: linear-gradient(rgba(210, 210, 210, 0.75), rgba(210, 210, 210, 0.75)), url(./Imagenes/retrato-mujer-feliz-gafas-sol-posando.jpg) no-repeat center center fixed;

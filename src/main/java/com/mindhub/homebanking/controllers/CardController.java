@@ -7,6 +7,7 @@ import com.mindhub.homebanking.repositories.CardRepository;
 import com.mindhub.homebanking.repositories.ClientRepository;
 import com.mindhub.homebanking.service.CardService;
 import com.mindhub.homebanking.service.ClientService;
+import com.mindhub.homebanking.utils.CardUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,7 +47,7 @@ public class CardController {
 
         String number;
         do{
-            number = getStringNumber();
+            number = CardUtils.getStringNumber();
         }while(cardService.findByNumber(number) != null);
 
         if(cards.size() >= 3) {
@@ -56,7 +57,8 @@ public class CardController {
         if(cards.stream().anyMatch(card -> card.getColor() == colorType)){
             return new ResponseEntity<>("You can't have same card", HttpStatus.FORBIDDEN);
         }
-        int numberCVV = getRandomCVV();
+
+        int numberCVV = CardUtils.getRandomCVV();
 
         Card newCard = new Card(client.getFirstName() + " " + client.getLastName(), cardType, colorType, number, numberCVV, LocalDate.now().plusYears(5), LocalDate.now(), true);
         cardService.saveCard(newCard);
@@ -66,26 +68,7 @@ public class CardController {
 
         return new ResponseEntity<>("Created card",HttpStatus.CREATED);
     }
-    int min = 1000;
-    int max = 8999;
 
-    int minCVV = 100;
-    int maxCVV = 899;
-    private int getNumberRandom(int min, int max){
-        Random random = new Random();
-        int number = random.nextInt(max) + min;
-        return number;
-    }
-    private String getStringNumber(){
-        String numberRandom = "";
-        for(int i = 0; i < 4; i++){
-            numberRandom += String.valueOf(getNumberRandom(min, max)) + " ";
-        }
-        return numberRandom;
-    }
-    private int getRandomCVV(){
-        return getNumberRandom(minCVV, maxCVV);
-    }
 
     @PutMapping("/clients/current/cards/{id}")
     public ResponseEntity<Object> deleteCard(Authentication authentication, @PathVariable Long id){

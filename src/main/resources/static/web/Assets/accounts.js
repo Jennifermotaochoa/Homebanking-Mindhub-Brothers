@@ -10,6 +10,13 @@ const app = createApp({
             loans:[],
             accounts: [],
             accountsActive: [],
+            accountType: "",
+            selectAccount: "",
+            selectPay: 0,
+            quota: 0,
+            total: 0,
+            selectLoan: "",
+            loanId: ""
         }
     },
 
@@ -27,7 +34,7 @@ const app = createApp({
                 this.accounts = this.datos.accountsDTO.filter(account => account.active);
                 console.log(this.accounts);
 
-                this.loans = this.datos.loans;
+                this.loans = this.datos.loans.filter(loan => loan.active);
                 console.log(this.loans);
                 
             })
@@ -35,7 +42,7 @@ const app = createApp({
         },
 
         newAccount(){
-            axios.post('/api/clients/current/accounts')
+            axios.post('/api/clients/current/accounts', 'accountType=' + this.accountType)
             .then(response => 
                 window.location.href="/web/accounts.html")
                 
@@ -68,14 +75,35 @@ const app = createApp({
             })
         },
 
+        payLoan(){
+           Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Pay'
+              }).then(result => {
+                    if (result.isConfirmed){
+                        axios.post('/api/loans/pay', 'loanId=' + this.selectLoan+ '&amount=' + this.selectPay + '&account=' + this.selectAccount)
+                        .then(response =>  window.location.href="/web/accounts.html")
+                        .catch(error => Swal.fire({
+                            title: 'Error',
+                            text: error.response.data,
+                            icon: 'error'
+                        }))   
+                    }
+            })
+        },
+
         logout(){
             axios.post('/api/logout')
             .then(response => 
                 window.location.href="/web/index.html")
             .catch(error => console.log(error))
         },
-    }
-
+    },
 })
 
 app.mount("#app");

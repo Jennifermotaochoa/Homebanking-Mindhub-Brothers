@@ -9,12 +9,14 @@ public class LoanDTO {
     private String name;
     private Double amount;
     private List<Integer> payments;
+    private Double interest;
 
     public LoanDTO(Loan loan) {
         this.id = loan.getId();
         this.name = loan.getName();
         this.amount = loan.getMaxAmount();
         this.payments = loan.getPayments();
+        this.interest = loan.getInterest();
     }
 
     public long getId() {
@@ -39,6 +41,10 @@ public class LoanDTO {
 
     public List<Integer> getPayments() {
         return payments;
+    }
+
+    public Double getInterest() {
+        return interest;
     }
 
     public void setPayments(List<Integer> payments) {

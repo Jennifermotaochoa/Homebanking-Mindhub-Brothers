@@ -19,16 +19,22 @@ import javax.servlet.http.HttpSession;
 public class WebAuthorization {
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
+        http.cors().and().authorizeRequests()
                 .antMatchers(HttpMethod.POST,"/web/index.html", "/web/login.html", "/web/register.html","/web/Assets/**").permitAll()
-                .antMatchers(HttpMethod.POST, "/api/clients", "/api/login", "/api/logout").permitAll()
+                .antMatchers(HttpMethod.POST, "/api/clients", "/api/login", "/api/logout", "/api/payments").permitAll()
 
                 .antMatchers("/manager.html", "/manager.js", "/style.css", "/h2-console/**", "/api/clients", "/api/clients/").hasAuthority("ADMIN")
-                .antMatchers("/api/clients/current/accounts", "/api/clients/current/accounts/", "/api/clients/current/cards", "/api/clients/current/transactions", "api/loans").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.POST, "/api/loans/admin").hasAuthority("ADMIN")
 
-                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/accounts/", "/api/clients/current/cards", "api/clients/current/transactions", "api/loans").hasAuthority("CLIENT")
+                .antMatchers("/api/clients/current/accounts", "/api/clients/current/accounts/", "/api/clients/current/cards", "/api/clients/current/transactions").hasAuthority("CLIENT")
+
+                .antMatchers("/api/loans").hasAnyAuthority("ADMIN", "CLIENT")
+
+                .antMatchers(HttpMethod.POST, "/api/clients/current/accounts", "/api/clients/current/accounts/", "/api/clients/current/cards", "/api/clients/current/transactions", "/api/loans").hasAuthority("CLIENT")
                 .antMatchers("/web/accounts.html", "/web/account.html", "/web/cards.html", "/web/create-cards.html", "/web/transfers.html", "web/loan-application.html").hasAuthority("CLIENT")
-                .antMatchers(HttpMethod.PUT,"/api/clients/current/cards/").hasAuthority("CLIENT");
+
+                .antMatchers(HttpMethod.PUT,"/api/clients/current/cards/").hasAuthority("CLIENT")
+                .antMatchers(HttpMethod.PUT,"/api/clients/current/accounts/").hasAuthority("CLIENT");
 
         http.formLogin()
                 .usernameParameter("email")
