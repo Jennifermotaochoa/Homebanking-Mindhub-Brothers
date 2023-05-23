@@ -349,7 +349,7 @@ footer{
   transform: rotateY(180deg);
 }
 
-@media (min-width:320px) and (max-width: 425px){
+/* @media (max-width: 425px){
     #img-index{
         display: none;
     }
@@ -366,4 +366,10 @@ footer{
         flex-direction: column;
         width: 100%!important;
     }
+} */
+
+@media (max-width: 421px) {
+  .final-balance {
+      display: none;
+  }
 }

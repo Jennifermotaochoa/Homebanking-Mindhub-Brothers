@@ -198,9 +198,9 @@
                   </div>
                 </div>
               </div>
-              <div class="d-flex">
+              <div class="d-flex align-items-center">
                 <template v-if="card.thruDate < currentDate">
-                  <h6>Your card is expired</h6>
+                  <h6 class="p-1">Your card is expired</h6>
                 </template>
                 <button type="button" class="btn btn-secondary" @click="deleteCard(card.id)">Delete card</button>
               </div>

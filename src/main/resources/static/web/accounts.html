@@ -92,6 +92,7 @@
             <h5 class="d-flex align-items-center" style="padding: 0.5rem;">Do you want a new loan?</h5>
             <a href="/web/loan-application.html"><button type="button" class="btn btn-secondary">New loan</button></a> 
           </div>
+          <!-- BOTON MODAL -->
           <div class="d-flex justify-content-center" v-if="loans.length > 0">
             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#exampleModal1">Pay</button>
           </div>
@@ -118,7 +119,7 @@
             <h5 class="d-flex justify-content-center">You haven't any loan.</h5>
           </div>
 
-          //MODAL
+          <!-- MODAL -->
           <div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">

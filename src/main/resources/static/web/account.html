@@ -45,7 +45,7 @@
                     <td>Amount</td>
                     <td>Description</td>
                     <td>Transaction Date</td>
-                    <td>Balance</td>
+                    <td class="final-balance">Balance</td>
                 </tr>
                 <tr v-for="transaction in account.transactionsDTO">
                     <td>{{transaction.type}}</td>
@@ -54,7 +54,7 @@
                       "USD" })}}</td>
                     <td>{{transaction.description}}</td>
                     <td>{{transaction.creationDate.slice(0,10)}} at {{transaction.creationDate.slice(11,16)}}</td>
-                    <td>{{transaction.currentBalance.toLocaleString("en-US", { style:
+                    <td class="final-balance">{{transaction.currentBalance.toLocaleString("en-US", { style:
                       "currency", currency:
                       "USD" })}}</td>
                 </tr>
