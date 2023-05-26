@@ -36,6 +36,8 @@ public class WebAuthorization {
                 .antMatchers(HttpMethod.PUT,"/api/clients/current/cards/").hasAuthority("CLIENT")
                 .antMatchers(HttpMethod.PUT,"/api/clients/current/accounts/").hasAuthority("CLIENT");
 
+        //.anyRequest().denyAll(); para denegar cualquier otra peticion
+
         http.formLogin()
                 .usernameParameter("email")
 

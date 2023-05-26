@@ -63,8 +63,8 @@ public class LoanController {
             return new ResponseEntity<>("You need to complete the destination account",HttpStatus.FORBIDDEN);
         }
 
-        if(String.valueOf(loanApplicationDTO.getAmount()).isBlank()){
-            return new ResponseEntity<>("You need to complete the amount", HttpStatus.FORBIDDEN);
+        if(loanApplicationDTO.getAmount() < 1000){
+            return new ResponseEntity<>("Your amount must be > 1000", HttpStatus.FORBIDDEN);
         }
 
         if (loanApplicationDTO.getPayments() < 1){
